@@ -5,7 +5,7 @@ generative AI.
 
 This project showcases how it's possible to leverage both data analysis and generative AI techniques to generate
 insights from openly available data. As a prototype, it represents a proof-of-concept of a potential larger-scale
-application.
+application. 
 
 Modules:
 - Data Search: Searches for open data on the web based on user input.
