@@ -32,15 +32,15 @@ License:
     GNU GPL v3.0
 """
 
-# Import necessary modules and dependencies
-# ...
+from config import load_settings
 
 
 def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+    print(f'Hi, {name}')
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi('Skilpad!')
+    settings = load_settings()
+    data_directory = settings.get('Paths', 'data_directory')
+    print(f'Data folder, {data_directory}')
