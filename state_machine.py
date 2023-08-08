@@ -36,11 +36,13 @@ Example:
 """
 
 from transitions import Machine
-from interactive_cli import print_status, read_input, select_list
+from interactive_cli import *
+from dataset_searcher import *
 
 
 class DatasetStateMachine:
     states = ['exit', 'search_a_dataset', 'select_dataset', 'create_report']
+    datasets = []
     dataset = ""
 
     def __init__(self):
@@ -54,19 +56,23 @@ class DatasetStateMachine:
 
     # You can define actions or methods associated with states or transitions here
     def on_enter_search_a_dataset(self):
-        dataset_query = read_input("\nSearch dataset: ")
-        print_status(f"Searching first 10 datasets using \"{dataset_query}\"...")
+        dataset_name = read_input("\nSearch dataset: ")
+        print_status(f"Searching first 10 datasets using \"{dataset_name}\"...")
+        self.datasets = search_datasets(dataset_name)
         self.select()
 
     def on_enter_select_dataset(self):
-        datasets = ['pippo', "pluto", "topolino", "paperino", "zio paperone"]
-        self.dataset = select_list(datasets)[0]
+        selected = select_list(give_datasets_title(self.datasets)[:10])
+        self.dataset = self.datasets[selected[1]]
+        print_status(f"\nDataset selected:")
+        display_dataset_details(self.dataset)
         self.download_and_analyse()
 
     def on_enter_create_report(self):
-        print_status(f"\nDownloading \"{self.dataset}\"...")
-        print_status(f"\nAnalysing \"{self.dataset}\"...")
+        print_status(f"\nDownloading \"{self.dataset.title}\"...")
+        print_status(f"\nAnalysing \"{self.dataset.title}\"...")
         print_status(f"\nGenerating report...")
+        self.exit_cli()
 
 
 if __name__ == "__main__":
